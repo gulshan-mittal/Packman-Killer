@@ -1,0 +1,61 @@
+   if(pond_inside(pond.bounding_box()))
+    {
+        if(pond_boundary(pond.bounding_box()))
+        {
+            ball1.speed = 0;
+            ball1.accel_y = 0;
+            bounding_box_t pond_tp = pond.bounding_box();
+            if(ball1.position.x >= pond.position.x - pond.radius_pond && ball1.position.x <= pond.position.x)
+            {
+                float angle = pond_angle(pond_tp);
+                angle -= (float)M_PI/45;
+                if(angle > 0.0f)
+                {
+                    float dff = pond_tp.radius - ball1.radius_ball;
+                    ball1.position.x = pond_tp.x + dff*cos(angle);
+                    ball1.position.y = pond_tp.y - dff*sin(angle);
+                }
+                else
+                {
+                    ball1.position.x = pond_tp.x - pond_tp.radius;
+                    // ball1.position.y = pond_tp.y + ball1.radius_ball;
+                    ball1.position.y = -1.68;
+                }
+            }
+            if(ball1.position.x > pond_tp.x)
+            {
+                float angle = pond_angle(pond_tp);
+                angle += (float)M_PI/(float)45;
+                if(angle < (float)M_PI)
+                {
+                    float dff = pond_tp.radius - ball1.radius_ball;
+                    ball1.position.x = pond_tp.x + dff*cos(angle);
+                    ball1.position.y = pond_tp.y - dff*sin(angle);
+                }
+                else
+                {
+                    ball1.position.x = pond_tp.x + pond_tp.radius;
+                    // ball1.position.y = pond_tp.y + ball1.radius_ball;
+                    ball1.position.y = -1.68;
+                }
+            }
+
+        }
+        else
+        {
+            ball1.accel_y  = 0.000;
+            ball1.accelearate();
+            if(pond_boundary(pond.bounding_box()))
+            {
+                ball1.speed = 0;
+                float angle = pond_angle(pond.bounding_box());
+                ball1.position.x = pond.position.x + (pond.radius_pond - ball1.radius_ball)*cos(angle);
+                ball1.position.y = pond.position.y - (pond.radius_pond - ball1.radius_ball)*sin(angle);
+
+            }
+        }
+    }
+
+
+
+    
